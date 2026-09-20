@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+# Maven generated effective POM
+/effective-pom.xml

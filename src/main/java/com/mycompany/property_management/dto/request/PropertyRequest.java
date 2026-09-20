@@ -19,7 +19,6 @@ public class PropertyRequest {
     @NotBlank
     @Email
     private String ownerEmail;
-    //private String ownerPhone;
     @NotNull
     private Long price;
 

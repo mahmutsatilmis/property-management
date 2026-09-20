@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PropertyServiceImp implements PropertyService {
+public class PropertyServiceImpl implements PropertyService {
     private final PropertyMapper propertyMapper;
     private final PropertyRepository propertyRepository;
 
-    public PropertyServiceImp(PropertyMapper propertyMapper, PropertyRepository propertyRepository) {
+    public PropertyServiceImpl(PropertyMapper propertyMapper, PropertyRepository propertyRepository) {
         this.propertyMapper = propertyMapper;
         this.propertyRepository = propertyRepository;
     }
