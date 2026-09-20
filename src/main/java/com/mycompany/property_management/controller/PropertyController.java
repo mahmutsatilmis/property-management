@@ -22,7 +22,7 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
     
-    @PostMapping("/saveProperty")
+    @PostMapping
     public ResponseEntity<PropertyResponse> saveProperty(@Valid @RequestBody PropertyRequest propertyRequest) {
         PropertyResponse response = propertyService.saveProperty(propertyRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -33,7 +33,7 @@ public class PropertyController {
         //return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long id, @Valid @RequestBody PropertyRequest propertyRequest){
         PropertyResponse response = propertyService.putProperty(id, propertyRequest);
         return ResponseEntity.ok(response);
@@ -45,7 +45,7 @@ public class PropertyController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/allProperties")
+    @GetMapping
     public ResponseEntity<List<PropertyResponse>> getAllProperties() {
 
         return ResponseEntity.ok(propertyService.getAllProperties());
