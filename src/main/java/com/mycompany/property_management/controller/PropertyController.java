@@ -22,39 +22,39 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
     
-    @PostMapping("/saveProperty")
-    public ResponseEntity<PropertyResponse> saveProperty(@Valid @RequestBody PropertyRequest propertyRequest) {
-        PropertyResponse response = propertyService.saveProperty(propertyRequest);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
+    @PostMapping
+    public ResponseEntity<PropertyResponse> createProperty(@Valid @RequestBody PropertyRequest propertyRequest, @RequestParam Long ownerId) {
+        PropertyResponse response = propertyService.createProperty(propertyRequest, ownerId);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{propertyId}")
                 .buildAndExpand(response.getId())
                 .toUri();
         return ResponseEntity.created(location).body(response);
-        //return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long id, @Valid @RequestBody PropertyRequest propertyRequest){
-        PropertyResponse response = propertyService.putProperty(id, propertyRequest);
+    @PutMapping("/{propertyId}")
+    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyRequest propertyRequest){
+        PropertyResponse response = propertyService.updateProperty(propertyId, propertyRequest);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePropertyById(@PathVariable Long id) {
-        propertyService.deleteById(id);
+    @DeleteMapping("/{propertyId}")
+    public ResponseEntity<Void> deletePropertyById(@PathVariable Long propertyId) {
+        propertyService.deleteById(propertyId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/allProperties")
+    @GetMapping
     public ResponseEntity<List<PropertyResponse>> getAllProperties() {
 
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<PropertyResponse> patchProperty(@PathVariable Long id, @Valid @RequestBody PatchPropertyRequest propertyRequest) {
-        PropertyResponse propertyResponse = propertyService.patchProperty(id, propertyRequest);
+    @PatchMapping("/{propertyId}")
+    public ResponseEntity<PropertyResponse> patchProperty(@PathVariable Long propertyId, @Valid @RequestBody PatchPropertyRequest propertyRequest) {
+        PropertyResponse propertyResponse = propertyService.patchProperty(propertyId, propertyRequest);
         return ResponseEntity.ok(propertyResponse);
     }
+    //TODO Add GET /{propertyId} endpoing
 
 }
