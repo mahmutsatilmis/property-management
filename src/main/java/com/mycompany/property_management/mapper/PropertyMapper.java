@@ -15,8 +15,6 @@ public class PropertyMapper {
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
         property.setAddress(propertyRequest.getAddress());
-        property.setOwnerEmail(propertyRequest.getOwnerEmail());
-        property.setOwnerName(propertyRequest.getOwnerName());
         return property;
     }
 
@@ -25,12 +23,10 @@ public class PropertyMapper {
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
         property.setAddress(propertyRequest.getAddress());
-        property.setOwnerEmail(propertyRequest.getOwnerEmail());
-        property.setOwnerName(propertyRequest.getOwnerName());
         return property;
     }
 
-    public Property updateEntityFromPatch(Property property, PatchPropertyRequest propertyRequest){
+    public void updateEntityFromPatch(Property property, PatchPropertyRequest propertyRequest){
         if (propertyRequest.getTitle() != null) {
             property.setTitle(propertyRequest.getTitle());
         }
@@ -43,13 +39,6 @@ public class PropertyMapper {
         if (propertyRequest.getAddress() != null) {
             property.setAddress(propertyRequest.getAddress());
         }
-        if (propertyRequest.getOwnerEmail() != null) {
-            property.setOwnerEmail(propertyRequest.getOwnerEmail());
-        }
-        if (propertyRequest.getOwnerName() != null) {
-            property.setOwnerName(propertyRequest.getOwnerName());
-        }
-        return property;
     }
 
 
@@ -60,8 +49,6 @@ public class PropertyMapper {
         propertyResponse.setDescription(property.getDescription());
         propertyResponse.setPrice(property.getPrice());
         propertyResponse.setAddress(property.getAddress());
-        propertyResponse.setOwnerEmail(property.getOwnerEmail());
-        propertyResponse.setOwnerName(property.getOwnerName());
         return propertyResponse;
     }
 }

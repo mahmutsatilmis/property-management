@@ -3,28 +3,28 @@ package com.mycompany.property_management.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PROPERTY")
 @Getter 
-@Setter 
+@Setter
 public class Property {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(name="PROPERTY_TITLE", nullable = false)
+    @Column(name="property_title", nullable = false)
     private String title;
-    @Column(name="PROPERTY_ADDRESS")
+    @Column(name="property_address")
     private String address;
-    @Column(name="PROPERTY_DESCRIPTION", nullable = false)
+    @Column(name="property_description", nullable = false)
     private String description;
-    @Column(name="OWNER_NAME", nullable=false)
-    private String ownerName;
-    @Column(name="OWNER_EMAIL", nullable = false)
-    private String ownerEmail;
-    @Column(name="PROPERTY_PRICE", nullable = false)
-    private Long price;
+    @Column(name="property_price", nullable = false)
+    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    User owner;
 
 }

@@ -6,21 +6,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter 
-@Setter 
+import java.math.BigDecimal;
+
+@Getter
 public class PropertyRequest {
     @NotBlank
     private String title;
     @NotBlank
     private String address;
+    @NotBlank
     private String description;
-    @NotBlank
-    private String ownerName;
-    @NotBlank
-    @Email
-    private String ownerEmail;
     @NotNull
-    private Long price;
+    private BigDecimal price;
 
     /*
     // Getters and Setters

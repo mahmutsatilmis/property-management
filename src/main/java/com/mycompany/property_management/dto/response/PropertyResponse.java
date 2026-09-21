@@ -1,17 +1,18 @@
 package com.mycompany.property_management.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter 
-@Setter 
+@Setter
 public class PropertyResponse {
     private Long id;
     private String title;
     private String address;
     private String description;
-    private String ownerName;
-    private String ownerEmail;
-    private double price;
+    private BigDecimal price;
 
 }
