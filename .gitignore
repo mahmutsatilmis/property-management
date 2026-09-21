@@ -33,3 +33,5 @@ build/
 .vscode/
 # Maven generated effective POM
 /effective-pom.xml
+#Log file
+/logs/
