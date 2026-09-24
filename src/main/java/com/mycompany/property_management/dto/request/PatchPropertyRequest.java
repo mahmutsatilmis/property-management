@@ -1,9 +1,6 @@
 package com.mycompany.property_management.dto.request;
 
-import jakarta.validation.constraints.Email;
 import lombok.Getter;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 
 @Getter

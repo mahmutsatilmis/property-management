@@ -10,6 +10,7 @@ import com.mycompany.property_management.exception.InvalidCredentialsException;
 import com.mycompany.property_management.exception.ResourceNotFoundException;
 import com.mycompany.property_management.mapper.UserMapper;
 import com.mycompany.property_management.repository.UserRepository;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
@@ -47,8 +48,8 @@ public class UserService {
         userMapper.toPutEntity(userRequest, user);
         user =  userRepository.save(user);
         return userMapper.toResponse(user);
-
     }
+
     public UserResponse patchUser(Long id, PatchUserRequest patchUserRequest) {
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("User not found")
@@ -62,6 +63,7 @@ public class UserService {
         user = userRepository.save(user);
         return userMapper.toResponse(user);
     }
+
     public void deleteUserById(Long userId) {
         userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")

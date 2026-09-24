@@ -3,7 +3,6 @@ package com.mycompany.property_management.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Table(name = "USER_TABLE")
 @Getter

@@ -4,6 +4,9 @@ import com.mycompany.property_management.dto.request.PatchPropertyRequest;
 import com.mycompany.property_management.dto.request.PropertyRequest;
 import com.mycompany.property_management.dto.response.PropertyResponse;
 import com.mycompany.property_management.service.PropertyService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-
-@RestController 
+@Tag(name = "Properties")
+@RestController
 @RequestMapping ("/api/properties")
 public class PropertyController {
 
@@ -21,7 +24,9 @@ public class PropertyController {
     public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
-    
+
+    @ApiResponse(responseCode = "400", description = "Request Body failed validation")
+    @ApiResponse(responseCode = "404", description = "User Not Found")
     @PostMapping
     public ResponseEntity<PropertyResponse> createProperty(@Valid @RequestBody PropertyRequest propertyRequest, @RequestParam Long ownerId) {
         PropertyResponse response = propertyService.createProperty(propertyRequest, ownerId);
@@ -32,6 +37,8 @@ public class PropertyController {
         return ResponseEntity.created(location).body(response);
     }
 
+    @ApiResponse(responseCode = "400", description = "Request Body failed validation")
+    @ApiResponse(responseCode = "404", description = "Property Not Found")
     @PutMapping("/{propertyId}")
     public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyRequest propertyRequest){
         PropertyResponse response = propertyService.updateProperty(propertyId, propertyRequest);
@@ -50,6 +57,8 @@ public class PropertyController {
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
+    @ApiResponse(responseCode = "400", description = "Request Body failed validation")
+    @ApiResponse(responseCode = "404", description = "Property Not Found")
     @PatchMapping("/{propertyId}")
     public ResponseEntity<PropertyResponse> patchProperty(@PathVariable Long propertyId, @Valid @RequestBody PatchPropertyRequest propertyRequest) {
         PropertyResponse propertyResponse = propertyService.patchProperty(propertyId, propertyRequest);
