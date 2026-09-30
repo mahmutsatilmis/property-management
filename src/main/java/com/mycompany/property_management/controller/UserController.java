@@ -6,11 +6,7 @@ import com.mycompany.property_management.dto.request.UserLoginRequest;
 import com.mycompany.property_management.dto.request.UserRequest;
 import com.mycompany.property_management.dto.response.UserResponse;
 import com.mycompany.property_management.service.UserService;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -67,8 +63,9 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "401", description = "Wrong email and/or password")
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> userLogin(@Valid @RequestBody UserLoginRequest userLoginRequest) {
-        return ResponseEntity.ok(userService.userLogin(userLoginRequest));
+    public ResponseEntity<Void> userLogin(@Valid @RequestBody UserLoginRequest userLoginRequest) {
+        userService.userLogin(userLoginRequest);
+        return ResponseEntity.noContent().build();
     }
 
 

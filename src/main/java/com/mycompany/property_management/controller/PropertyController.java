@@ -5,7 +5,6 @@ import com.mycompany.property_management.dto.request.PropertyRequest;
 import com.mycompany.property_management.dto.response.PropertyResponse;
 import com.mycompany.property_management.service.PropertyService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +27,8 @@ public class PropertyController {
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "404", description = "User Not Found")
     @PostMapping
-    public ResponseEntity<PropertyResponse> createProperty(@Valid @RequestBody PropertyRequest propertyRequest, @RequestParam Long ownerId) {
-        PropertyResponse response = propertyService.createProperty(propertyRequest, ownerId);
+    public ResponseEntity<PropertyResponse> createProperty(@Valid @RequestBody PropertyRequest propertyRequest) {
+        PropertyResponse response = propertyService.createProperty(propertyRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{propertyId}")
                 .buildAndExpand(response.getId())
@@ -51,9 +50,8 @@ public class PropertyController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/allProperties")
     public ResponseEntity<List<PropertyResponse>> getAllProperties() {
-
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
@@ -64,6 +62,17 @@ public class PropertyController {
         PropertyResponse propertyResponse = propertyService.patchProperty(propertyId, propertyRequest);
         return ResponseEntity.ok(propertyResponse);
     }
-    //TODO Add GET /{propertyId} endpoing
+
+    @ApiResponse(responseCode = "404", description = "Property Not Found")
+    @GetMapping("/{propertyId}")
+    public ResponseEntity<PropertyResponse> getPropertyById(@PathVariable Long propertyId) {
+        return ResponseEntity.ok(propertyService.getPropertyById(propertyId));
+    }
+
+    @ApiResponse(responseCode = "404", description = "User Not Found")
+    @GetMapping("/{userId}/allProperties")
+    public ResponseEntity<List<PropertyResponse>> getAllPropertiesByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(propertyService.getPropertyByOwnerId(userId));
+    }
 
 }
