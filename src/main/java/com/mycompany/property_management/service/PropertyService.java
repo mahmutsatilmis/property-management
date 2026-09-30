@@ -27,17 +27,17 @@ public class PropertyService {
     }
 
 
-    public PropertyResponse createProperty(PropertyRequest propertyRequest, Long ownerId) {
-        User owner = userRepository.findById(ownerId).orElseThrow(
+    public PropertyResponse createProperty(PropertyRequest propertyRequest) {
+        User owner = userRepository.findById(propertyRequest.getOwnerId()).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        Property property = propertyMapper.toEntity(propertyRequest);
-        property.setOwner(owner);
+        Property property = propertyMapper.toEntity(propertyRequest, owner);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
     }
 
     public List<PropertyResponse> getAllProperties() {
+        // TODO: Understand and fix potential N+1 query problem
         return propertyRepository.findAll()
                 .stream()
                 .map(propertyMapper::toResponse)
@@ -69,5 +69,19 @@ public class PropertyService {
         propertyMapper.updateEntityFromPatch(property, propertyRequest);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
+    }
+
+    public PropertyResponse getPropertyById(Long id) {
+        Property property = propertyRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Property not found")
+        );
+        return propertyMapper.toResponse(property);
+    }
+    public List<PropertyResponse> getPropertyByOwnerId(Long ownerId) {
+        if(!userRepository.existsById(ownerId)){
+            throw new ResourceNotFoundException("User not found");
+        }
+        return propertyRepository.findAllByOwnerId(ownerId).stream().
+                map(propertyMapper::toResponse).toList();
     }
 }

@@ -1,18 +1,12 @@
 package com.mycompany.property_management.dto.response;
 
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse {
-
+public class OwnerResponse {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
-    private String phoneNumber;
 }
