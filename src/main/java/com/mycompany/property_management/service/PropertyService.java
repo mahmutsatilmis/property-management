@@ -1,6 +1,7 @@
 package com.mycompany.property_management.service;
 
-import com.mycompany.property_management.dto.request.PatchPropertyRequest;
+import com.mycompany.property_management.dto.request.PropertyPatchRequest;
+import com.mycompany.property_management.dto.request.PropertyPutRequest;
 import com.mycompany.property_management.dto.request.PropertyRequest;
 import com.mycompany.property_management.dto.response.PropertyResponse;
 import com.mycompany.property_management.entity.Property;
@@ -52,21 +53,21 @@ public class PropertyService {
     }
 
 
-    public PropertyResponse updateProperty(Long id, PropertyRequest propertyRequest) {
+    public PropertyResponse updateProperty(Long id, PropertyPutRequest propertyRequest) {
         Property property = propertyRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Property not found")
         );
-        property = propertyMapper.updateEntityFromPut(property, propertyRequest);
+        propertyMapper.toPutEntity(property, propertyRequest);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
     }
 
 
-    public PropertyResponse patchProperty(Long id, PatchPropertyRequest propertyRequest) {
+    public PropertyResponse patchProperty(Long id, PropertyPatchRequest propertyRequest) {
         Property property = propertyRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Property not found")
         );
-        propertyMapper.updateEntityFromPatch(property, propertyRequest);
+        propertyMapper.toPatchEntity(property, propertyRequest);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
     }
@@ -77,8 +78,9 @@ public class PropertyService {
         );
         return propertyMapper.toResponse(property);
     }
+
     public List<PropertyResponse> getPropertyByOwnerId(Long ownerId) {
-        if(!userRepository.existsById(ownerId)){
+        if (!userRepository.existsById(ownerId)) {
             throw new ResourceNotFoundException("User not found");
         }
         return propertyRepository.findAllByOwnerId(ownerId).stream().

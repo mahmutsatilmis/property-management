@@ -1,6 +1,7 @@
 package com.mycompany.property_management.mapper;
 
-import com.mycompany.property_management.dto.request.PatchUserRequest;
+import com.mycompany.property_management.dto.request.UserPatchRequest;
+import com.mycompany.property_management.dto.request.UserPutRequest;
 import com.mycompany.property_management.dto.request.UserRequest;
 import com.mycompany.property_management.dto.response.UserResponse;
 import com.mycompany.property_management.entity.User;
@@ -28,25 +29,25 @@ public class UserMapper {
         return userResponse;
     }
 
-    public void toPutEntity(UserRequest userRequest, User user){
+    public void toPutEntity(UserPutRequest userRequest, User user){
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setEmail(userRequest.getEmail());
     }
 
-    public void toPatchEntity(PatchUserRequest patchUserRequest, User user) {
-        if (patchUserRequest.getEmail() != null) {
-            user.setEmail(patchUserRequest.getEmail());
+    public void toPatchEntity(UserPatchRequest userPatchRequest, User user) {
+        if (userPatchRequest.getEmail() != null) {
+            user.setEmail(userPatchRequest.getEmail());
         }
-        if (patchUserRequest.getPhoneNumber() != null) {
-            user.setPhoneNumber(patchUserRequest.getPhoneNumber());
+        if (userPatchRequest.getPhoneNumber() != null) {
+            user.setPhoneNumber(userPatchRequest.getPhoneNumber());
         }
-        if (patchUserRequest.getFirstName() != null) {
-            user.setFirstName(patchUserRequest.getFirstName());
+        if (userPatchRequest.getFirstName() != null) {
+            user.setFirstName(userPatchRequest.getFirstName());
         }
-        if (patchUserRequest.getLastName() != null) {
-            user.setLastName(patchUserRequest.getLastName());
+        if (userPatchRequest.getLastName() != null) {
+            user.setLastName(userPatchRequest.getLastName());
         }
     }
 }

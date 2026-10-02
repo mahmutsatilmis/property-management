@@ -1,6 +1,7 @@
 package com.mycompany.property_management.mapper;
 
-import com.mycompany.property_management.dto.request.PatchPropertyRequest;
+import com.mycompany.property_management.dto.request.PropertyPatchRequest;
+import com.mycompany.property_management.dto.request.PropertyPutRequest;
 import com.mycompany.property_management.dto.request.PropertyRequest;
 import com.mycompany.property_management.dto.response.OwnerResponse;
 import com.mycompany.property_management.dto.response.PropertyResponse;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertyMapper {
 
-    public Property toEntity(PropertyRequest propertyRequest){
-        Property property=new Property();
+    public Property toEntity(PropertyRequest propertyRequest) {
+        Property property = new Property();
         property.setTitle(propertyRequest.getTitle());
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
@@ -20,8 +21,8 @@ public class PropertyMapper {
         return property;
     }
 
-    public Property toEntity(PropertyRequest propertyRequest, User owner){
-        Property property=new Property();
+    public Property toEntity(PropertyRequest propertyRequest, User owner) {
+        Property property = new Property();
         property.setTitle(propertyRequest.getTitle());
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
@@ -30,15 +31,14 @@ public class PropertyMapper {
         return property;
     }
 
-    public Property updateEntityFromPut(Property property, PropertyRequest propertyRequest){
+    public void toPutEntity(Property property, PropertyPutRequest propertyRequest) {
         property.setTitle(propertyRequest.getTitle());
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
         property.setAddress(propertyRequest.getAddress());
-        return property;
     }
 
-    public void updateEntityFromPatch(Property property, PatchPropertyRequest propertyRequest){
+    public void toPatchEntity(Property property, PropertyPatchRequest propertyRequest) {
         if (propertyRequest.getTitle() != null) {
             property.setTitle(propertyRequest.getTitle());
         }
@@ -54,8 +54,8 @@ public class PropertyMapper {
     }
 
 
-    public PropertyResponse toResponse(Property property){
-        PropertyResponse propertyResponse=new PropertyResponse();
+    public PropertyResponse toResponse(Property property) {
+        PropertyResponse propertyResponse = new PropertyResponse();
         propertyResponse.setId(property.getId());
         propertyResponse.setTitle(property.getTitle());
         propertyResponse.setDescription(property.getDescription());
@@ -65,7 +65,7 @@ public class PropertyMapper {
         return propertyResponse;
     }
 
-    private OwnerResponse toOwnerResponse(User owner){
+    private OwnerResponse toOwnerResponse(User owner) {
         OwnerResponse ownerResponse = new OwnerResponse();
         ownerResponse.setId(owner.getId());
         ownerResponse.setFirstName(owner.getFirstName());

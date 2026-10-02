@@ -6,7 +6,7 @@ import lombok.Getter;
 
 
 @Getter
-public class PatchUserRequest {
+public class UserPatchRequest {
     @Pattern(regexp = "\\s*+\\S.*", message = "First name cannot be blank")
     private String firstName;
     @Pattern(regexp = "\\s*+\\S.*", message = "Last name cannot be blank")
