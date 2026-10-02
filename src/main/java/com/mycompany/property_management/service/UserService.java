@@ -1,7 +1,8 @@
 package com.mycompany.property_management.service;
 
-import com.mycompany.property_management.dto.request.PatchUserRequest;
+import com.mycompany.property_management.dto.request.UserPatchRequest;
 import com.mycompany.property_management.dto.request.UserLoginRequest;
+import com.mycompany.property_management.dto.request.UserPutRequest;
 import com.mycompany.property_management.dto.request.UserRequest;
 import com.mycompany.property_management.dto.response.UserResponse;
 import com.mycompany.property_management.entity.User;
@@ -33,7 +34,7 @@ public class UserService {
     }
 
     public UserResponse createUser(UserRequest userRequest) {
-        if(userRepository.existsByEmail(userRequest.getEmail())){
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
             throw new DuplicateEmailException("Email already exists");
         }
         User user = userMapper.toEntity(userRequest);
@@ -42,28 +43,28 @@ public class UserService {
         return userMapper.toResponse(user);
     }
 
-    public UserResponse updateUser(Long userId, UserRequest userRequest) {
+    public UserResponse updateUser(Long userId, UserPutRequest userPutRequest) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        if(userRepository.existsByEmail(userRequest.getEmail()) && !user.getEmail().equalsIgnoreCase(userRequest.getEmail())){
+        if (userRepository.existsByEmail(userPutRequest.getEmail()) && !user.getEmail().equalsIgnoreCase(userPutRequest.getEmail())) {
             throw new DuplicateEmailException("Email already exists");
         }
-        userMapper.toPutEntity(userRequest, user);
-        user =  userRepository.save(user);
+        userMapper.toPutEntity(userPutRequest, user);
+        user = userRepository.save(user);
         return userMapper.toResponse(user);
     }
 
-    public UserResponse patchUser(Long id, PatchUserRequest patchUserRequest) {
+    public UserResponse patchUser(Long id, UserPatchRequest userPatchRequest) {
         User user = userRepository.findById(id).orElseThrow(
-                ()-> new ResourceNotFoundException("User not found")
+                () -> new ResourceNotFoundException("User not found")
         );
-        if(patchUserRequest.getEmail() != null &&
-                userRepository.existsByEmail(patchUserRequest.getEmail())
-                && !user.getEmail().equalsIgnoreCase(patchUserRequest.getEmail())){
+        if (userPatchRequest.getEmail() != null &&
+                userRepository.existsByEmail(userPatchRequest.getEmail())
+                && !user.getEmail().equalsIgnoreCase(userPatchRequest.getEmail())) {
             throw new DuplicateEmailException("Email belongs to another user");
         }
-        userMapper.toPatchEntity(patchUserRequest, user);
+        userMapper.toPatchEntity(userPatchRequest, user);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
     }
@@ -85,8 +86,6 @@ public class UserService {
             throw new InvalidCredentialsException("Wrong email and/or password");
         }
     }
-
-
 
 
 }

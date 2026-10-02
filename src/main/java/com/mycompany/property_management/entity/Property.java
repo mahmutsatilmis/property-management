@@ -21,8 +21,8 @@ public class Property {
     private String description;
     @Column(name="property_price", nullable = false)
     private BigDecimal price;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
 }

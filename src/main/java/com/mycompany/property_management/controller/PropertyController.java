@@ -1,6 +1,7 @@
 package com.mycompany.property_management.controller;
 
-import com.mycompany.property_management.dto.request.PatchPropertyRequest;
+import com.mycompany.property_management.dto.request.PropertyPatchRequest;
+import com.mycompany.property_management.dto.request.PropertyPutRequest;
 import com.mycompany.property_management.dto.request.PropertyRequest;
 import com.mycompany.property_management.dto.response.PropertyResponse;
 import com.mycompany.property_management.service.PropertyService;
@@ -39,7 +40,7 @@ public class PropertyController {
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "404", description = "Property Not Found")
     @PutMapping("/{propertyId}")
-    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyRequest propertyRequest){
+    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyPutRequest propertyRequest){
         PropertyResponse response = propertyService.updateProperty(propertyId, propertyRequest);
         return ResponseEntity.ok(response);
     }
@@ -58,7 +59,7 @@ public class PropertyController {
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "404", description = "Property Not Found")
     @PatchMapping("/{propertyId}")
-    public ResponseEntity<PropertyResponse> patchProperty(@PathVariable Long propertyId, @Valid @RequestBody PatchPropertyRequest propertyRequest) {
+    public ResponseEntity<PropertyResponse> patchProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyPatchRequest propertyRequest) {
         PropertyResponse propertyResponse = propertyService.patchProperty(propertyId, propertyRequest);
         return ResponseEntity.ok(propertyResponse);
     }

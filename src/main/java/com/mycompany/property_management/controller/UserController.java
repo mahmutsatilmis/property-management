@@ -1,8 +1,9 @@
 package com.mycompany.property_management.controller;
 
 
-import com.mycompany.property_management.dto.request.PatchUserRequest;
+import com.mycompany.property_management.dto.request.UserPatchRequest;
 import com.mycompany.property_management.dto.request.UserLoginRequest;
+import com.mycompany.property_management.dto.request.UserPutRequest;
 import com.mycompany.property_management.dto.request.UserRequest;
 import com.mycompany.property_management.dto.response.UserResponse;
 import com.mycompany.property_management.service.UserService;
@@ -40,7 +41,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User Not Found")
     @ApiResponse(responseCode = "409", description = "Email already exists")
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponse> updateUser(@RequestBody @Valid UserRequest userRequest, @PathVariable Long userId) {
+    public ResponseEntity<UserResponse> updateUser(@RequestBody @Valid UserPutRequest userRequest, @PathVariable Long userId) {
         UserResponse userResponse = userService.updateUser(userId, userRequest);
         return  ResponseEntity.ok(userResponse);
     }
@@ -49,8 +50,8 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User Not Found")
     @ApiResponse(responseCode = "409", description = "Email already exists")
     @PatchMapping("/{userId}")
-    public ResponseEntity<UserResponse> patchUser(@RequestBody @Valid PatchUserRequest patchUserRequest, @PathVariable Long userId) {
-        UserResponse userResponse = userService.patchUser(userId, patchUserRequest);
+    public ResponseEntity<UserResponse> patchUser(@RequestBody @Valid UserPatchRequest userPatchRequest, @PathVariable Long userId) {
+        UserResponse userResponse = userService.patchUser(userId, userPatchRequest);
         return ResponseEntity.ok(userResponse);
     }
 
