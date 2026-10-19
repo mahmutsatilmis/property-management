@@ -33,13 +33,9 @@ public class UserMapper {
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setPhoneNumber(userRequest.getPhoneNumber());
-        user.setEmail(userRequest.getEmail());
     }
 
     public void toPatchEntity(UserPatchRequest userPatchRequest, User user) {
-        if (userPatchRequest.getEmail() != null) {
-            user.setEmail(userPatchRequest.getEmail());
-        }
         if (userPatchRequest.getPhoneNumber() != null) {
             user.setPhoneNumber(userPatchRequest.getPhoneNumber());
         }

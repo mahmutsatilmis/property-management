@@ -47,9 +47,6 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        if (userRepository.existsByEmail(userPutRequest.getEmail()) && !user.getEmail().equalsIgnoreCase(userPutRequest.getEmail())) {
-            throw new DuplicateEmailException("Email already exists");
-        }
         userMapper.toPutEntity(userPutRequest, user);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
@@ -59,11 +56,6 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        if (userPatchRequest.getEmail() != null &&
-                userRepository.existsByEmail(userPatchRequest.getEmail())
-                && !user.getEmail().equalsIgnoreCase(userPatchRequest.getEmail())) {
-            throw new DuplicateEmailException("Email belongs to another user");
-        }
         userMapper.toPatchEntity(userPatchRequest, user);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
