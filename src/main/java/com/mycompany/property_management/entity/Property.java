@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 @Table(name = "PROPERTY")
 @Getter 
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Property {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

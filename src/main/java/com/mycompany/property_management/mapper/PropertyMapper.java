@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertyMapper {
 
-    public Property toEntity(PropertyRequest propertyRequest) {
+/*    public Property toEntity(PropertyRequest propertyRequest) {
         Property property = new Property();
         property.setTitle(propertyRequest.getTitle());
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
         property.setAddress(propertyRequest.getAddress());
         return property;
-    }
+    } */
 
     public Property toEntity(PropertyRequest propertyRequest, User owner) {
         Property property = new Property();
