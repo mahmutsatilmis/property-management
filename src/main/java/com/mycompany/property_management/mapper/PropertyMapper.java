@@ -31,14 +31,14 @@ public class PropertyMapper {
         return property;
     }
 
-    public void toPutEntity(Property property, PropertyPutRequest propertyRequest) {
+    public void updateEntity(Property property, PropertyPutRequest propertyRequest) {
         property.setTitle(propertyRequest.getTitle());
         property.setDescription(propertyRequest.getDescription());
         property.setPrice(propertyRequest.getPrice());
         property.setAddress(propertyRequest.getAddress());
     }
 
-    public void toPatchEntity(Property property, PropertyPatchRequest propertyRequest) {
+    public void patchEntity(Property property, PropertyPatchRequest propertyRequest) {
         if (propertyRequest.getTitle() != null) {
             property.setTitle(propertyRequest.getTitle());
         }

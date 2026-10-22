@@ -45,17 +45,6 @@ public class PropertyController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{propertyId}")
-    public ResponseEntity<Void> deletePropertyById(@PathVariable Long propertyId) {
-        propertyService.deleteById(propertyId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/allProperties")
-    public ResponseEntity<List<PropertyResponse>> getAllProperties() {
-        return ResponseEntity.ok(propertyService.getAllProperties());
-    }
-
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "404", description = "Property Not Found")
     @PatchMapping("/{propertyId}")
@@ -64,10 +53,21 @@ public class PropertyController {
         return ResponseEntity.ok(propertyResponse);
     }
 
+    @DeleteMapping("/{propertyId}")
+    public ResponseEntity<Void> deletePropertyById(@PathVariable Long propertyId) {
+        propertyService.deleteById(propertyId);
+        return ResponseEntity.noContent().build();
+    }
+
     @ApiResponse(responseCode = "404", description = "Property Not Found")
     @GetMapping("/{propertyId}")
     public ResponseEntity<PropertyResponse> getPropertyById(@PathVariable Long propertyId) {
         return ResponseEntity.ok(propertyService.getPropertyById(propertyId));
+    }
+
+    @GetMapping("/allProperties")
+    public ResponseEntity<List<PropertyResponse>> getAllProperties() {
+        return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
     @ApiResponse(responseCode = "404", description = "User Not Found")

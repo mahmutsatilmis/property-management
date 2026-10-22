@@ -1,4 +1,4 @@
-package com.mycompany.property_management.unittesting.service;
+package com.mycompany.property_management.service;
 
 import com.mycompany.property_management.dto.request.UserLoginRequest;
 import com.mycompany.property_management.dto.request.UserPatchRequest;
@@ -12,7 +12,6 @@ import com.mycompany.property_management.exception.ResourceNotFoundException;
 import com.mycompany.property_management.mapper.UserMapper;
 import com.mycompany.property_management.repository.PropertyRepository;
 import com.mycompany.property_management.repository.UserRepository;
-import com.mycompany.property_management.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -105,7 +104,7 @@ class UserServiceTest {
             UserResponse result = userService.updateUser(1L, userRequest);
 
             assertThat(result).isEqualTo(userResponse);
-            verify(userMapper).toPutEntity(userRequest, user);
+            verify(userMapper).updateEntity(userRequest, user);
             verify(userRepository).save(user);
         }
 
@@ -140,7 +139,7 @@ class UserServiceTest {
             UserResponse result = userService.patchUser(1L, userPatchRequest);
 
             assertThat(result).isEqualTo(userResponse);
-            verify(userMapper).toPatchEntity(userPatchRequest, user);
+            verify(userMapper).patchEntity(userPatchRequest, user);
             verify(userRepository).save(user);
         }
 

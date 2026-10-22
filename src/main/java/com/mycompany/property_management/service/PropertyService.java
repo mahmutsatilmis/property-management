@@ -57,7 +57,7 @@ public class PropertyService {
         Property property = propertyRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Property not found")
         );
-        propertyMapper.toPutEntity(property, propertyRequest);
+        propertyMapper.updateEntity(property, propertyRequest);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
     }
@@ -67,7 +67,7 @@ public class PropertyService {
         Property property = propertyRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Property not found")
         );
-        propertyMapper.toPatchEntity(property, propertyRequest);
+        propertyMapper.patchEntity(property, propertyRequest);
         property = propertyRepository.save(property);
         return propertyMapper.toResponse(property);
     }
