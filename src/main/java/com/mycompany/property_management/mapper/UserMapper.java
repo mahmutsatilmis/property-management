@@ -29,13 +29,13 @@ public class UserMapper {
         return userResponse;
     }
 
-    public void toPutEntity(UserPutRequest userRequest, User user){
+    public void updateEntity(UserPutRequest userRequest, User user){
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setPhoneNumber(userRequest.getPhoneNumber());
     }
 
-    public void toPatchEntity(UserPatchRequest userPatchRequest, User user) {
+    public void patchEntity(UserPatchRequest userPatchRequest, User user) {
         if (userPatchRequest.getPhoneNumber() != null) {
             user.setPhoneNumber(userPatchRequest.getPhoneNumber());
         }

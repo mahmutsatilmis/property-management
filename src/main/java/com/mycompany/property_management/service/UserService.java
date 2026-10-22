@@ -47,7 +47,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        userMapper.toPutEntity(userPutRequest, user);
+        userMapper.updateEntity(userPutRequest, user);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
     }
@@ -56,7 +56,7 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        userMapper.toPatchEntity(userPatchRequest, user);
+        userMapper.patchEntity(userPatchRequest, user);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
     }

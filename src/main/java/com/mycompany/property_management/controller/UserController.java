@@ -48,13 +48,13 @@ public class UserController {
 
     @ApiResponse(responseCode = "400", description = "Request Body failed validation")
     @ApiResponse(responseCode = "404", description = "User Not Found")
-    @ApiResponse(responseCode = "409", description = "Email already exists")
     @PatchMapping("/{userId}")
     public ResponseEntity<UserResponse> patchUser(@RequestBody @Valid UserPatchRequest userPatchRequest, @PathVariable Long userId) {
         UserResponse userResponse = userService.patchUser(userId, userPatchRequest);
         return ResponseEntity.ok(userResponse);
     }
 
+    @ApiResponse(responseCode = "404", description = "User Not Found")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long userId) {
         userService.deleteUserById(userId);

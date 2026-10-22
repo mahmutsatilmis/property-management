@@ -1,4 +1,4 @@
-package com.mycompany.property_management.unittesting.service;
+package com.mycompany.property_management.service;
 
 import com.mycompany.property_management.dto.request.PropertyPatchRequest;
 import com.mycompany.property_management.dto.request.PropertyPutRequest;
@@ -9,10 +9,8 @@ import com.mycompany.property_management.entity.Property;
 import com.mycompany.property_management.entity.User;
 import com.mycompany.property_management.exception.ResourceNotFoundException;
 import com.mycompany.property_management.mapper.PropertyMapper;
-import com.mycompany.property_management.mapper.UserMapper;
 import com.mycompany.property_management.repository.PropertyRepository;
 import com.mycompany.property_management.repository.UserRepository;
-import com.mycompany.property_management.service.PropertyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,7 +43,7 @@ class PropertyServiceTest {
 
 
     @Nested
-    class CreatePropertyTest {
+    class CreatePropertyTests {
 
         private User owner;
         private PropertyRequest propertyRequest;
@@ -85,7 +83,7 @@ class PropertyServiceTest {
     }
 
     @Nested
-    class DeletePropertyTest {
+    class DeletePropertyTests {
 
         @Test
         void shouldDeletePropertyById() {
@@ -113,7 +111,7 @@ class PropertyServiceTest {
     }
 
     @Nested
-    class UpdatePropertyTest {
+    class UpdatePropertyTests {
 
         private PropertyPutRequest propertyPutRequest;
         private PropertyResponse propertyResponse;
@@ -134,7 +132,7 @@ class PropertyServiceTest {
             PropertyResponse result = propertyService.updateProperty(1L, propertyPutRequest);
 
             assertThat(result).isEqualTo(propertyResponse);
-            verify(propertyMapper).toPutEntity(property, propertyPutRequest);
+            verify(propertyMapper).updateEntity(property, propertyPutRequest);
             verify(propertyRepository).save(property);
         }
 
@@ -150,7 +148,7 @@ class PropertyServiceTest {
     }
 
     @Nested
-    class PatchPropertyTest {
+    class PatchPropertyTests {
 
         private PropertyPatchRequest propertyPatchRequest;
         private PropertyResponse propertyResponse;
@@ -174,7 +172,7 @@ class PropertyServiceTest {
 
             assertThat(result).isEqualTo(propertyResponse);
 
-            verify(propertyMapper).toPatchEntity(property, propertyPatchRequest);
+            verify(propertyMapper).patchEntity(property, propertyPatchRequest);
             verify(propertyRepository).save(property);
         }
 
@@ -193,7 +191,7 @@ class PropertyServiceTest {
     }
 
     @Nested
-    class GetPropertyByIdTest {
+    class GetPropertyByIdTests {
 
         private PropertyResponse propertyResponse;
 
@@ -212,8 +210,7 @@ class PropertyServiceTest {
 
             PropertyResponse result = propertyService.getPropertyById(1L);
 
-            assertThat(result).isNotNull();
-            assertThat(result).isEqualTo(propertyResponse);
+            assertThat(result).isNotNull().isEqualTo(propertyResponse);
         }
 
         @Test
@@ -227,11 +224,11 @@ class PropertyServiceTest {
     }
 
     @Nested
-    class GetAllPropertiesByOwnerIdTest {
+    class GetAllPropertiesByOwnerIdTests {
 
         private PropertyResponse propertyResponse;
         private PropertyResponse propertyResponse2;
-        private Property property;
+        private Property property1;
         private Property property2;
         private List<Property> propertyList;
         private List<PropertyResponse> propertyResponseList;
@@ -240,12 +237,12 @@ class PropertyServiceTest {
         void setUp() {
             User owner = new User(2L, "John", "Doe", "john.doe@example.com", "password456", "0987654321");
             OwnerResponse ownerResponse = new OwnerResponse(2L, "John", "Doe");
-            property = new Property(2L, "Modern Apartment", "456 Elm St", "A modern apartment in the city center", new BigDecimal(8000000), owner);
+            property1 = new Property(2L, "Modern Apartment", "456 Elm St", "A modern apartment in the city center", new BigDecimal(8000000), owner);
             property2 = new Property(3L, "Cozy Cottage", "789 Oak St", "A cozy cottage in the countryside", new BigDecimal(6000000), owner);
             propertyResponse = new PropertyResponse(2L, "Modern Apartment", "456 Elm St", "A modern apartment in the city center", new BigDecimal(8000000), ownerResponse);
             propertyResponse2 = new PropertyResponse(3L, "Cozy Cottage", "789 Oak St", "A cozy cottage in the countryside", new BigDecimal(6000000), ownerResponse);
             propertyResponseList = List.of(propertyResponse, propertyResponse2);
-            propertyList = List.of(property, property2);
+            propertyList = List.of(property1, property2);
 
         }
 
@@ -253,7 +250,7 @@ class PropertyServiceTest {
         void shouldGetAllPropertiesByOwnerId() {
             when(userRepository.existsById(2L)).thenReturn(true);
             when(propertyRepository.findAllByOwnerId(2L)).thenReturn(propertyList);
-            when(propertyMapper.toResponse(property)).thenReturn(propertyResponse);
+            when(propertyMapper.toResponse(property1)).thenReturn(propertyResponse);
             when(propertyMapper.toResponse(property2)).thenReturn(propertyResponse2);
 
             List<PropertyResponse> result = propertyService.getPropertyByOwnerId(2L);
